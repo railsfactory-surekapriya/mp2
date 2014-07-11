@@ -1,58 +1,74 @@
 require_relative '../lib/todolist.rb'
 require 'test/unit'
 class Todolisttest < Test::Unit::TestCase
- 
-def test_empty
- 
- assert_equal true,Todolist.empty
-assert_equal 0,Todolist.pending
-assert_equal 0,Todolist.completed
-assert_equal 0,Todolist.list
+ $t = Todolist.new("aaa.txt")
+def test_1aempty
+
+assert_equal true,$t.empty
+assert_equal 0,$t.pending
+assert_equal 0,$t.completed
+assert_equal 0,$t.list
 
 end
-def test_add_first_item
-  assert_equal 1,Todolist.add("open")
-  assert_equal 1,Todolist.pending
-  assert_equal 0,Todolist.completed
-  assert_equal 1,Todolist.list
+
+def test_2add1
+
+  assert_equal 1,$t.add("open")
+  assert_equal 1,$t.pending
+  assert_equal 0,$t.completed
+  assert_equal 1,$t.list
   
 end
-def test_add_second_item
-   assert_equal 2,Todolist.add("search")
-   assert_equal 2,Todolist.pending
-   assert_equal 0,Todolist.completed
-   assert_equal 2,Todolist.list
+def test_3add2
+
+   assert_equal 2,$t.add("save")
+   assert_equal 2,$t.pending
+   assert_equal 0,$t.completed
+   assert_equal 2,$t.list
 end
- def test_add_third_item
-   assert_equal 3,Todolist.add("merge")
-   assert_equal 3,Todolist.pending
-   assert_equal 0,Todolist.completed
-   assert_equal 3,Todolist.list
-end
-def test_modify_item
-   assert_equal "write",Todolist.modify(2,"write")
-   assert_equal 3,Todolist.pending
-   assert_equal 0,Todolist.completed
-   assert_equal 3,Todolist.list
- end
-def test_completed
-   assert_equal 0,Todolist.completed
-   assert_equal 3,Todolist.pending
-   assert_equal 3,Todolist.list
-   
-end
-def test_show
-   assert_equal 3,Todolist.pending
-   assert_equal 0,Todolist.completed
+ def test_4add3
+
+   assert_equal 3,$t.add("merge")
+   assert_equal 3,$t.pending
+   assert_equal 0,$t.completed
+   assert_equal 3,$t.list
 end
 
-def test_delete
-  assert_equal 0,Todolist.completed
-  assert_equal 4,Todolist.add("hello")
-  assert_equal 4,Todolist.list
-  assert_equal 1,Todolist.delete(3)
-  assert_equal 3,Todolist.list
+def test_5complete
+
+  assert_equal 1,$t.complete(1)
+  assert_equal 2,$t.complete(2)
+  assert_equal 1,$t.pending 
+  assert_equal 2,$t.completed
+  assert_equal 3,$t.list
 end
+
+def test_6delete
+
+  assert_equal 1,$t.delete(1)
+  assert_equal 2,$t.list
+  assert_equal 1,$t.pending 
+  assert_equal 1,$t.completed
+end
+def test_7modify
+
+   assert_equal "write",$t.modify(1,"write")
+   assert_equal 1,$t.pending
+   assert_equal 1,$t.completed
+   assert_equal 2,$t.list
+ end
+
+
+def test_8pending
+
+  assert_equal "write",$t.show_pending(1)
+
+end
+def test_9qcompleted
+
+assert_equal nil, $t.show_completed(2)
+end
+
 
 end
 
